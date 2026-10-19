@@ -18,7 +18,7 @@ export function Servicos() {
   return (
     <section id="servicos" className="relative py-24">
       <div aria-hidden className="mb-16 overflow-hidden whitespace-nowrap opacity-40">
-        <div className="animar-letreiro inline-flex gap-10 font-display text-2xl uppercase text-prata">
+        <div className="animar-letreiro inline-flex gap-10 text-lg text-prata">
           {[...SERVICOS, ...SERVICOS].map((s, i) => (
             <span key={i} className="flex items-center gap-10">{s.nome}<span className="text-neon">✦</span></span>
           ))}
@@ -40,7 +40,7 @@ export function Servicos() {
                     aria-expanded={ativo}
                   >
                     <span className="w-8 shrink-0 font-display text-xs text-neon">{String(i + 1).padStart(2, "0")}</span>
-                    <span className={`min-w-0 flex-1 font-display text-xl font-bold uppercase transition-colors sm:text-4xl ${ativo ? "texto-neon" : "text-foreground group-hover:text-neon"}`}>
+                    <span className={`min-w-0 flex-1 text-lg font-semibold transition-colors sm:text-2xl ${ativo ? "texto-neon" : "text-foreground group-hover:text-neon"}`}>
                       {s.nome}
                     </span>
                     <Plus className={`h-6 w-6 shrink-0 transition-transform duration-300 ${ativo ? "rotate-45 text-neon" : "text-muted-foreground"}`} />

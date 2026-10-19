@@ -51,9 +51,9 @@ export const SERVICOS: Servico[] = [
     foto: "https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?auto=format&fit=crop&w=900&q=70",
   },
   {
-    id: "lavagem-motos",
-    nome: "Lavagem de motos",
-    resumo: "Motor, corrente e carenagem tratados com o cuidado que a sua moto merece.",
+    id: "lavagem-convencional",
+    nome: "Lavagem convencional",
+    resumo: "Lavagem externa caprichada para o dia a dia: carro limpo, rápido e sem complicação.",
     foto: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=70",
   },
   {

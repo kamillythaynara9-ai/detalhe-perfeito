@@ -12,6 +12,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import video from "@/assets/hero-video.mp4.asset.json";
 import capa from "@/assets/carro-limpo.jpg";
+import { MARCA } from "@/config/marca";
+import { linkWhatsapp } from "@/lib/whatsapp";
 
 export function Topo() {
   const ref = useRef<HTMLElement>(null);
@@ -70,8 +72,8 @@ export function Topo() {
           <a href="#agendar" className="corte-hexagono bg-gradiente-neon animar-brilho shadow-neon px-8 py-4 font-display text-sm font-bold uppercase tracking-widest text-primary-foreground">
             Agendar agora
           </a>
-          <a href="#antes-depois" className="px-2 py-4 text-sm uppercase tracking-widest text-prata underline-offset-8 hover:underline">
-            Ver resultado →
+          <a href={linkWhatsapp(`Olá, ${MARCA.nome}! Vim pelo site.`)} target="_blank" rel="noopener" className="corte-hexagono border border-whatsapp px-8 py-4 font-display text-sm font-bold uppercase tracking-widest text-whatsapp">
+            Falar no WhatsApp
           </a>
         </motion.div>
       </div>
