@@ -4,28 +4,39 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/*
- * Design system definition.
+/* =====================================================================
+ * DESIGN SYSTEM — DETALHE PERFEITO · Estúdio Automotivo
+ * ---------------------------------------------------------------------
+ * REGRA DE OURO: nenhum componente escreve cor "na mão" (bg-black,
+ * text-white, #00ff00). Toda cor, degradê, sombra, fonte e animação
+ * nasce AQUI, com nome que diz o que é. Os componentes só usam os
+ * nomes (bg-background, text-neon, bg-gradiente-neon...).
  *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
+ * DE ONDE VEIO CADA COR (lido da logo):
+ *  - Fundo preto profundo da logo        -> --background (preto azulado,
+ *    nunca #000 puro: preto puro "achata" e cansa a vista no celular)
+ *  - Prata metálico do carro e da moldura -> --prata / --foreground
+ *  - Verde neon das estrelas e do texto
+ *    "ESTÚDIO AUTOMOTIVO"                 -> --neon (cor de ação/destaque)
+ *  - Verde escuro                          -> --neon-profundo (degradês)
  *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
- */
+ * FORMAS (lidas da logo): a logo é um HEXÁGONO alongado com pontas.
+ * Por isso usamos cantos cortados (clip-path hexagonal) em botões e
+ * selos, em vez de cantos arredondados genéricos.
+ * ===================================================================== */
 
 @theme inline {
+  /* Fontes: Orbitron = traço largo e técnico igual a "DETALHE PERFEITO".
+     Exo 2 = leitura confortável, mas ainda com ar automotivo. */
+  --font-display: "Orbitron", ui-sans-serif, sans-serif;
+  --font-sans: "Exo 2", ui-sans-serif, system-ui, sans-serif;
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -45,100 +56,166 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-ring-offset-background: var(--background);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Cores da marca com nome próprio */
+  --color-neon: var(--neon);
+  --color-neon-profundo: var(--neon-profundo);
+  --color-prata: var(--prata);
+  --color-grafite: var(--grafite);
+  --color-whatsapp: var(--whatsapp);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
-}
+  --radius: 0.75rem;
 
-.dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --background: oklch(0.13 0.008 250);      /* preto da logo, levemente azulado */
+  --foreground: oklch(0.95 0.005 250);      /* prata claro para texto */
+  --card: oklch(0.18 0.01 250);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.18 0.01 250);
+  --popover-foreground: var(--foreground);
+
+  --neon: oklch(0.82 0.22 142);             /* verde das estrelas */
+  --neon-profundo: oklch(0.45 0.14 150);
+  --prata: oklch(0.82 0.01 250);            /* prata do carro/moldura */
+  --grafite: oklch(0.22 0.01 250);
+  --whatsapp: oklch(0.72 0.17 150);
+
+  --primary: var(--neon);
+  --primary-foreground: oklch(0.15 0.02 150);
+  --secondary: var(--grafite);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.2 0.01 250);
+  --muted-foreground: oklch(0.7 0.01 250);
+  --accent: oklch(0.25 0.03 150);
+  --accent-foreground: var(--neon);
+  --destructive: oklch(0.65 0.22 27);
+  --destructive-foreground: var(--foreground);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: var(--neon);
+
+  /* ---------- DEGRADÊS (todos derivados da logo) ---------- */
+  /* Texto prata metálico, como o carro da logo */
+  --gradiente-prata: linear-gradient(180deg, oklch(0.98 0 0) 0%, oklch(0.75 0.01 250) 55%, oklch(0.9 0 0) 100%);
+  /* Botão de ação: neon -> verde profundo */
+  --gradiente-neon: linear-gradient(135deg, var(--neon) 0%, oklch(0.7 0.2 148) 50%, var(--neon-profundo) 100%);
+  /* Fundo vivo: manchas de luz verde/prata que "respiram" */
+  --gradiente-fundo:
+    radial-gradient(60% 40% at var(--luz-x, 20%) var(--luz-y, 10%), oklch(0.45 0.14 150 / 0.35), transparent 70%),
+    radial-gradient(50% 35% at 85% 60%, oklch(0.6 0.02 250 / 0.18), transparent 70%),
+    radial-gradient(70% 50% at 10% 95%, oklch(0.4 0.12 150 / 0.25), transparent 70%),
+    linear-gradient(180deg, oklch(0.12 0.008 250), oklch(0.15 0.015 200) 50%, oklch(0.11 0.01 250));
+  /* Vidro fosco para painéis flutuantes (sem borda dura) */
+  --vidro: oklch(0.2 0.01 250 / 0.55);
+
+  /* ---------- SOMBRAS ---------- */
+  --sombra-neon: 0 0 0 1px oklch(0.82 0.22 142 / 0.35), 0 10px 40px -8px oklch(0.82 0.22 142 / 0.55);
+  --sombra-profunda: 0 30px 60px -20px oklch(0 0 0 / 0.7);
+
+  /* Forma hexagonal da logo, reaproveitada em botões e selos */
+  --corte-hexagono: polygon(12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%, 0 50%);
 }
 
 @layer base {
-  * {
-    border-color: var(--color-border);
-  }
-
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.02em; }
+}
+
+/* ---------- UTILITÁRIOS DA MARCA ---------- */
+@utility bg-gradiente-fundo { background: var(--gradiente-fundo); }
+@utility bg-gradiente-neon { background: var(--gradiente-neon); }
+@utility bg-vidro { background: var(--vidro); backdrop-filter: blur(16px) saturate(140%); }
+@utility shadow-neon { box-shadow: var(--sombra-neon); }
+@utility shadow-profunda { box-shadow: var(--sombra-profunda); }
+@utility corte-hexagono { clip-path: var(--corte-hexagono); }
+
+/* Texto prata metálico com reflexo (o "brilho" do carro recém-polido) */
+@utility texto-prata {
+  background: var(--gradiente-prata);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@utility texto-neon {
+  color: var(--neon);
+  text-shadow: 0 0 18px oklch(0.82 0.22 142 / 0.55);
+}
+
+/* ---------- ANIMAÇÕES COM NOME (o nome diz o efeito) ---------- */
+
+/* brilho-varrendo: faixa de luz que passa sobre o texto, como reflexo de
+   lâmpada sobre pintura polida. Usada no título e nos botões. */
+@keyframes brilho-varrendo {
+  0% { transform: translateX(-120%) skewX(-20deg); }
+  60%, 100% { transform: translateX(220%) skewX(-20deg); }
+}
+@utility animar-brilho {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.45), transparent);
+    animation: brilho-varrendo 3.6s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+/* fundo-respirando: as manchas de luz do fundo crescem e encolhem devagar.
+   É o "movimento contínuo e leve" pedido no briefing. */
+@keyframes fundo-respirando {
+  0%, 100% { transform: scale(1) translate3d(0, 0, 0); opacity: 0.8; }
+  50% { transform: scale(1.15) translate3d(2%, -2%, 0); opacity: 1; }
+}
+@utility animar-respirar { animation: fundo-respirando 14s ease-in-out infinite; }
+
+/* gota-escorrendo: gotas de água descendo pela tela no topo. */
+@keyframes gota-escorrendo {
+  0% { transform: translateY(-10vh); opacity: 0; }
+  10% { opacity: 0.8; }
+  100% { transform: translateY(110vh); opacity: 0; }
+}
+@utility animar-gota { animation: gota-escorrendo linear infinite; }
+
+/* estrela-piscando: as 4 estrelas verdes da logo piscando em sequência. */
+@keyframes estrela-piscando {
+  0%, 100% { opacity: 0.35; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+@utility animar-estrela { animation: estrela-piscando 2.4s ease-in-out infinite; }
+
+/* pulso-whatsapp: anel que pulsa em volta do botão flutuante, chamando o toque. */
+@keyframes pulso-whatsapp {
+  0% { box-shadow: 0 0 0 0 oklch(0.72 0.17 150 / 0.6); }
+  100% { box-shadow: 0 0 0 18px oklch(0.72 0.17 150 / 0); }
+}
+@utility animar-pulso { animation: pulso-whatsapp 2s ease-out infinite; }
+
+/* letreiro-deslizando: faixa infinita com nomes dos serviços. */
+@keyframes letreiro-deslizando {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@utility animar-letreiro { animation: letreiro-deslizando 28s linear infinite; }
+
+/* ACESSIBILIDADE: quem ativa "reduzir movimento" no sistema recebe o site
+   parado. Nunca esqueça este bloco. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
