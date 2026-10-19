@@ -8,7 +8,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import logo from "@/assets/logo-detalhe-perfeito.jpg.asset.json";
+import logo from "@/assets/logo-detalhe-perfeito.png.asset.json";
 
 const LINKS = [
   { href: "#servicos", rotulo: "Serviços" },
@@ -31,9 +31,9 @@ export function Cabecalho() {
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${rolou ? "bg-vidro py-2" : "py-4"}`}>
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5">
         <a href="#topo" className="flex min-w-0 items-center gap-2" aria-label="Detalhe Perfeito — início">
-          {/* A logo original tem fundo preto: recortamos o centro para caber na barra */}
-          <span className="h-11 w-20 shrink-0 overflow-hidden">
-            <img src={logo.url} alt="" className="h-full w-full scale-[1.9] object-cover" />
+          {/* Logo sem fundo: cabe inteira na barra */}
+          <span className="h-12 w-28 shrink-0">
+            <img src={logo.url} alt="" className="h-full w-full object-contain" />
           </span>
         </a>
 

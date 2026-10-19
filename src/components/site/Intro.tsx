@@ -9,7 +9,7 @@
  */
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import logo from "@/assets/logo-detalhe-perfeito.jpg.asset.json";
+import logo from "@/assets/logo-detalhe-perfeito.png.asset.json";
 
 export function Intro() {
   const reduzir = useReducedMotion();
