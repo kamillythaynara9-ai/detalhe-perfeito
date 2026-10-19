@@ -1,24 +1,56 @@
+/**
+ * PÁGINA INICIAL — monta o site na ordem da "conversa de venda":
+ *   impacto (Topo) -> o que fazemos (Serviços) -> prova (Antes/Depois)
+ *   -> escolha (Planos) -> ação (Agendar) -> confiança (Depoimentos, FAQ)
+ *   -> última chamada + contato (Rodapé).
+ * Cada seção é um componente em src/components/site/ — leia o comentário
+ * no topo de cada um para entender o efeito e a interação.
+ */
 import { createFileRoute } from "@tanstack/react-router";
+import { AntesDepois } from "@/components/site/AntesDepois";
+import { Agendamento } from "@/components/site/Agendamento";
+import { BotaoWhatsapp } from "@/components/site/BotaoWhatsapp";
+import { Cabecalho } from "@/components/site/Cabecalho";
+import { Depoimentos } from "@/components/site/Depoimentos";
+import { FundoVivo } from "@/components/site/FundoVivo";
+import { Intro } from "@/components/site/Intro";
+import { Perguntas } from "@/components/site/Perguntas";
+import { Planos } from "@/components/site/Planos";
+import { Rodape } from "@/components/site/Rodape";
+import { Servicos } from "@/components/site/Servicos";
+import { Topo } from "@/components/site/Topo";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Detalhe Perfeito · Estúdio Automotivo em São Paulo" },
+      { name: "description", content: "Lavagem detalhada, higienização, polimento e plano mensal. Agende pelo WhatsApp em poucos toques." },
+      { property: "og:title", content: "Detalhe Perfeito · Estúdio Automotivo" },
+      { property: "og:description", content: "Seu carro com brilho de vitrine. Agende pelo WhatsApp." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <Intro />
+      <FundoVivo />
+      <Cabecalho />
+      <main>
+        <Topo />
+        <Servicos />
+        <AntesDepois />
+        <Planos />
+        <Agendamento />
+        <Depoimentos />
+        <Perguntas />
+      </main>
+      <Rodape />
+      <BotaoWhatsapp />
+    </>
   );
 }
