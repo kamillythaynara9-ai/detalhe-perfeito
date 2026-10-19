@@ -29,11 +29,12 @@ export function Cabecalho() {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${rolou ? "bg-vidro py-2" : "py-4"}`}>
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5">
+      {/* px-3: barra quase encostada na borda esquerda, como pediu a cliente. */}
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-3 md:px-5">
         <a href="#topo" className="flex min-w-0 items-center gap-2" aria-label="Detalhe Perfeito — início">
-          {/* Logo sem fundo: cabe inteira na barra */}
-          <span className="h-12 w-28 shrink-0">
-            <img src={logo.url} alt="" className="h-full w-full object-contain" />
+          {/* Logo sem fundo: um pouco maior e mais para o canto esquerdo */}
+          <span className="h-14 w-36 shrink-0 md:h-16 md:w-44">
+            <img src={logo.url} alt="" className="h-full w-full object-contain object-left" />
           </span>
         </a>
 
