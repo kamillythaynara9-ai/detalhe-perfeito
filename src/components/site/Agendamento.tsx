@@ -12,8 +12,9 @@
  *   1. Serviço     — "Plano mensal" (exclusivo: desmarca os avulsos)
  *   2. Veículo     — tipo + modelo
  *   3. Dias        — frequência (toda semana / a cada 15 dias) + dias fixos
- *   4. Cada dia    — horário e serviço daquele dia (ex.: terça lavagem,
- *                    sexta higienização)
+ *   4. Cada dia    — horário e um ou mais serviços daquele dia (ex.: terça
+ *                    lavagem, sexta lavagem + higienização). Botões, não
+ *                    <select>: a lista nativa ficava ilegível no tema escuro.
  *   5. Início + nome + observação -> WhatsApp com a agenda organizada
  *
  * EFEITO: barra de progresso neon cresce a cada passo; cada passo entra
@@ -51,8 +52,8 @@ const chipPequeno = (ativo: boolean) =>
   `corte-hexagono px-3 py-2 text-xs font-semibold transition-all ${ativo ? "bg-gradiente-neon text-primary-foreground" : "bg-secondary text-foreground hover:text-neon"}`;
 const campo = "w-full rounded-xl bg-input px-4 py-3.5 text-foreground outline-none ring-neon placeholder:text-muted-foreground focus:ring-2";
 
-type ConfigDia = { horario: string; servico: string };
-const DIA_VAZIO: ConfigDia = { horario: "", servico: "" };
+type ConfigDia = { horario: string; servicos: string[] };
+const DIA_VAZIO: ConfigDia = { horario: "", servicos: [] };
 
 export function Agendamento() {
   const [passo, setPasso] = useState(0);
@@ -86,7 +87,7 @@ export function Agendamento() {
       true,
       veiculoOk,
       diasEscolhidos.length > 0,
-      diasEscolhidos.every((d) => cfg(d).horario && cfg(d).servico),
+      diasEscolhidos.every((d) => cfg(d).horario && cfg(d).servicos.length > 0),
       !!inicio && !ehDomingo(inicio) && nomeOk,
     ][passo];
   }, [mensal, passo, servicos, tipo, modelo, nome, data, horario, dias, diasEscolhidos, inicio]);
@@ -108,6 +109,11 @@ export function Agendamento() {
     });
 
   const ajustarDia = (d: string, parte: Partial<ConfigDia>) => setDias((atual) => ({ ...atual, [d]: { ...(atual[d] ?? DIA_VAZIO), ...parte } }));
+  // Cada dia pode ter mais de um serviço (ex.: lavagem + higienização).
+  const alternarServicoDia = (d: string, n: string) => {
+    const atuais = cfg(d).servicos;
+    ajustarDia(d, { servicos: atuais.includes(n) ? atuais.filter((x) => x !== n) : [...atuais, n] });
+  };
 
   const enviar = () => {
     const msg = mensal
@@ -115,7 +121,7 @@ export function Agendamento() {
           tipoVeiculo: tipo,
           modelo: modelo.trim(),
           frequencia,
-          dias: diasEscolhidos.map((d) => ({ dia: d, ...cfg(d) })),
+          dias: diasEscolhidos.map((d) => ({ dia: d, horario: cfg(d).horario, servico: cfg(d).servicos.join(", ") })),
           inicio,
           nome: nome.trim(),
           observacao: observacao.trim() || undefined,
@@ -214,10 +220,12 @@ export function Agendamento() {
                         <div className="mb-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
                           {HORARIOS.map((h) => <button key={h} onClick={() => ajustarDia(d, { horario: h })} className={chipPequeno(cfg(d).horario === h)}>{horaCurta(h)}</button>)}
                         </div>
-                        <select value={cfg(d).servico} onChange={(e) => ajustarDia(d, { servico: e.target.value })} aria-label={`Serviço de ${d}`} className={`${campo} [color-scheme:dark]`}>
-                          <option value="" disabled>Qual serviço neste dia?</option>
-                          {SERVICOS_DO_PLANO.map((s) => <option key={s.id} value={s.nome}>{s.nome}</option>)}
-                        </select>
+                        <p className="mb-2 text-xs text-muted-foreground">Serviços deste dia (pode marcar mais de um)</p>
+                        <div className="flex flex-wrap gap-2" role="group" aria-label={`Serviços de ${d}`}>
+                          {SERVICOS_DO_PLANO.map((s) => (
+                            <button key={s.id} onClick={() => alternarServicoDia(d, s.nome)} className={chipPequeno(cfg(d).servicos.includes(s.nome))}>{s.nome}</button>
+                          ))}
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -235,7 +243,7 @@ export function Agendamento() {
                     linhas={[
                       ["Veículo", `${tipo} · ${modelo}`],
                       ["Frequência", frequencia],
-                      ...diasEscolhidos.map((d) => [d, `${horaCurta(cfg(d).horario)} · ${cfg(d).servico}`] as [string, string]),
+                      ...diasEscolhidos.map((d) => [d, `${horaCurta(cfg(d).horario)} · ${cfg(d).servicos.join(", ")}`] as [string, string]),
                       ["Início", inicio && formatarData(inicio)],
                     ]}
                   />

@@ -32,8 +32,8 @@ export function Cabecalho() {
       {/* px-3: barra quase encostada na borda esquerda, como pediu a cliente. */}
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-3 md:px-5">
         <a href="#topo" className="flex min-w-0 items-center gap-2" aria-label="Detalhe Perfeito — início">
-          {/* Logo sem fundo: um pouco maior e mais para o canto esquerdo */}
-          <span className="h-14 w-36 shrink-0 md:h-16 md:w-44">
+          {/* Logo recortada (sem sobra em volta), grande e no canto esquerdo, a pedido da cliente */}
+          <span className="h-16 w-44 shrink-0 md:h-20 md:w-56">
             <img src={logo} alt="" className="h-full w-full object-contain object-left" />
           </span>
         </a>
