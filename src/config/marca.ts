@@ -73,7 +73,8 @@ export const TIPOS_VEICULO = ["Hatch", "Sedã", "SUV", "Picape", "Moto"] as cons
 export const DIAS_SEMANA = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"] as const;
 
 // Frequências do plano mensal.
-export const FREQUENCIAS_PLANO = ["Toda semana", "A cada 15 dias"] as const;
+// "Personalizado" abre uma caixa para a pessoa dizer de quantos em quantos dias.
+export const FREQUENCIAS_PLANO = ["Toda semana", "A cada 15 dias", "Personalizado"] as const;
 
 // id do serviço que abre o questionário do plano mensal.
 export const ID_PLANO_MENSAL = "plano-mensal";

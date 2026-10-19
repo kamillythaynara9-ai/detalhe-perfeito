@@ -47,4 +47,19 @@ describe("agendamento via WhatsApp", () => {
     expect(msg).toContain("*Começar em:* 03/11/2026");
     expect(msg).not.toContain("Observação");
   });
+
+  it("plano personalizado (a cada N dias) traz horário e serviços sem dia da semana", () => {
+    const msg = mensagemPlanoMensal({
+      tipoVeiculo: "SUV",
+      modelo: "Compass",
+      frequencia: "A cada 3 dias",
+      dias: [{ dia: "A cada 3 dias", horario: "09:30", servico: "Lavagem detalhada, Polimento" }],
+      inicio: "2026-11-03",
+      nome: "Rui",
+    });
+    expect(msg).toContain("*Frequência:* A cada 3 dias");
+    expect(msg).toContain("*Horário:* 09:30");
+    expect(msg).toContain("*Serviços:* Lavagem detalhada, Polimento");
+    expect(msg).not.toContain("*Dias:*");
+  });
 });

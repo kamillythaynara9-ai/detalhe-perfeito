@@ -63,8 +63,10 @@ export function mensagemPlanoMensal(p: PedidoPlanoMensal): string {
     ``,
     `*Veículo:* ${p.tipoVeiculo} · ${p.modelo}`,
     `*Frequência:* ${p.frequencia}`,
-    `*Dias:*`,
-    ...p.dias.map((d) => `• ${d.dia}, ${d.horario} · ${d.servico}`),
+    // Personalizado ("A cada 3 dias") não tem dia da semana: só horário e serviços.
+    ...(p.dias.length === 1 && p.dias[0]?.dia === p.frequencia
+      ? [`*Horário:* ${p.dias[0].horario}`, `*Serviços:* ${p.dias[0].servico}`]
+      : [`*Dias:*`, ...p.dias.map((d) => `• ${d.dia}, ${d.horario} · ${d.servico}`)]),
     `*Começar em:* ${formatarData(p.inicio)}`,
     ...(p.observacao ? [`*Observação:* ${p.observacao}`] : []),
     `*Nome:* ${p.nome}`,

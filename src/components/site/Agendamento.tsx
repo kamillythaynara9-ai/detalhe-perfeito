@@ -11,7 +11,9 @@
  * PLANO MENSAL (5 passos) — é uma agenda fixa, não um dia só:
  *   1. Serviço     — "Plano mensal" (exclusivo: desmarca os avulsos)
  *   2. Veículo     — tipo + modelo
- *   3. Dias        — frequência (toda semana / a cada 15 dias) + dias fixos
+ *   3. Dias        — frequência (toda semana / a cada 15 dias) + dias fixos;
+ *                    ou "Personalizado": a pessoa digita o intervalo (ex.: a
+ *                    cada 3 dias) e não escolhe dia da semana
  *   4. Cada dia    — horário e um ou mais serviços daquele dia (ex.: terça
  *                    lavagem, sexta lavagem + higienização). Botões, não
  *                    <select>: a lista nativa ficava ilegível no tema escuro.
@@ -53,6 +55,8 @@ const chipPequeno = (ativo: boolean) =>
 const campo = "w-full rounded-xl bg-input px-4 py-3.5 text-foreground outline-none ring-neon placeholder:text-muted-foreground focus:ring-2";
 
 type ConfigDia = { horario: string; servicos: string[] };
+// No personalizado não há dia da semana: um único bloco de horário/serviços.
+const CHAVE_PERSONALIZADO = "personalizado";
 const DIA_VAZIO: ConfigDia = { horario: "", servicos: [] };
 
 export function Agendamento() {
@@ -67,6 +71,7 @@ export function Agendamento() {
   // plano mensal
   const [frequencia, setFrequencia] = useState<string>(FREQUENCIAS_PLANO[0]);
   const [dias, setDias] = useState<Record<string, ConfigDia>>({});
+  const [intervalo, setIntervalo] = useState("");
   const [inicio, setInicio] = useState("");
   const [observacao, setObservacao] = useState("");
 
@@ -74,7 +79,12 @@ export function Agendamento() {
   const PASSOS = mensal ? PASSOS_MENSAL : PASSOS_AVULSO;
   const ultimo = PASSOS.length - 1;
   // Dias escolhidos sempre na ordem da semana, não na ordem do clique.
-  const diasEscolhidos = DIAS_SEMANA.filter((d) => d in dias);
+  const personalizado = frequencia === "Personalizado";
+  const nIntervalo = Number(intervalo);
+  const intervaloOk = Number.isInteger(nIntervalo) && nIntervalo >= 1 && nIntervalo <= 30;
+  const rotuloIntervalo = `A cada ${nIntervalo} ${nIntervalo === 1 ? "dia" : "dias"}`;
+  const diasEscolhidos: string[] = personalizado ? [CHAVE_PERSONALIZADO] : DIAS_SEMANA.filter((d) => d in dias);
+  const nomeDia = (d: string) => (d === CHAVE_PERSONALIZADO ? rotuloIntervalo : d);
   const cfg = (d: string) => dias[d] ?? DIA_VAZIO;
 
   const completo = useMemo(() => {
@@ -86,11 +96,11 @@ export function Agendamento() {
     return [
       true,
       veiculoOk,
-      diasEscolhidos.length > 0,
+      personalizado ? intervaloOk : diasEscolhidos.length > 0,
       diasEscolhidos.every((d) => cfg(d).horario && cfg(d).servicos.length > 0),
       !!inicio && !ehDomingo(inicio) && nomeOk,
     ][passo];
-  }, [mensal, passo, servicos, tipo, modelo, nome, data, horario, dias, diasEscolhidos, inicio]);
+  }, [mensal, passo, servicos, tipo, modelo, nome, data, horario, dias, diasEscolhidos, inicio, personalizado, intervaloOk]);
 
   // Plano mensal é exclusivo: escolher ele limpa os avulsos e vice-versa.
   const alternar = (n: string) =>
@@ -120,8 +130,8 @@ export function Agendamento() {
       ? mensagemPlanoMensal({
           tipoVeiculo: tipo,
           modelo: modelo.trim(),
-          frequencia,
-          dias: diasEscolhidos.map((d) => ({ dia: d, horario: cfg(d).horario, servico: cfg(d).servicos.join(", ") })),
+          frequencia: personalizado ? rotuloIntervalo : frequencia,
+          dias: diasEscolhidos.map((d) => ({ dia: nomeDia(d), horario: cfg(d).horario, servico: cfg(d).servicos.join(", ") })),
           inicio,
           nome: nome.trim(),
           observacao: observacao.trim() || undefined,
@@ -202,26 +212,40 @@ export function Agendamento() {
                   <div className="mb-8 flex flex-wrap gap-3">
                     {FREQUENCIAS_PLANO.map((f) => <button key={f} onClick={() => setFrequencia(f)} className={chip(frequencia === f)}>{f}</button>)}
                   </div>
-                  <h3 className="mb-5 font-display text-lg uppercase">Em quais dias?</h3>
-                  <div className="flex flex-wrap gap-3">
-                    {DIAS_SEMANA.map((d) => <button key={d} onClick={() => alternarDia(d)} className={chip(d in dias)}>{d}</button>)}
-                  </div>
-                  <p className="mt-4 text-xs text-muted-foreground">Pode escolher mais de um. Não atendemos aos domingos.</p>
+                  {personalizado ? (
+                    <>
+                      <label htmlFor="intervalo" className="mb-3 block font-display text-lg uppercase">De quantos em quantos dias?</label>
+                      <div className="flex items-center gap-3 whitespace-nowrap">
+                        <span className="text-muted-foreground">A cada</span>
+                        <input id="intervalo" type="number" inputMode="numeric" min={1} max={30} value={intervalo} onChange={(e) => setIntervalo(e.target.value)} placeholder="3" className={`${campo} !w-24 text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`} />
+                        <span className="text-muted-foreground">dias</span>
+                      </div>
+                      {intervalo && !intervaloOk && <p className="mt-2 text-sm text-destructive">Digite um número de 1 a 30.</p>}
+                    </>
+                  ) : (
+                    <>
+                      <h3 className="mb-5 font-display text-lg uppercase">Em quais dias?</h3>
+                      <div className="flex flex-wrap gap-3">
+                        {DIAS_SEMANA.map((d) => <button key={d} onClick={() => alternarDia(d)} className={chip(d in dias)}>{d}</button>)}
+                      </div>
+                      <p className="mt-4 text-xs text-muted-foreground">Pode escolher mais de um. Não atendemos aos domingos.</p>
+                    </>
+                  )}
                 </>
               )}
 
               {mensal && passo === 3 && (
                 <>
-                  <h3 className="mb-5 font-display text-lg uppercase">Horário e serviço de cada dia</h3>
+                  <h3 className="mb-5 font-display text-lg uppercase">{personalizado ? "Horário e serviço" : "Horário e serviço de cada dia"}</h3>
                   <div className="space-y-8">
                     {diasEscolhidos.map((d) => (
                       <div key={d}>
-                        <p className="mb-3 font-display text-sm uppercase text-neon">{d}</p>
+                        <p className="mb-3 font-display text-sm uppercase text-neon">{nomeDia(d)}</p>
                         <div className="mb-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
                           {HORARIOS.map((h) => <button key={h} onClick={() => ajustarDia(d, { horario: h })} className={chipPequeno(cfg(d).horario === h)}>{horaCurta(h)}</button>)}
                         </div>
                         <p className="mb-2 text-xs text-muted-foreground">Serviços deste dia (pode marcar mais de um)</p>
-                        <div className="flex flex-wrap gap-2" role="group" aria-label={`Serviços de ${d}`}>
+                        <div className="flex flex-wrap gap-2" role="group" aria-label={`Serviços de ${nomeDia(d)}`}>
                           {SERVICOS_DO_PLANO.map((s) => (
                             <button key={s.id} onClick={() => alternarServicoDia(d, s.nome)} className={chipPequeno(cfg(d).servicos.includes(s.nome))}>{s.nome}</button>
                           ))}
@@ -242,8 +266,8 @@ export function Agendamento() {
                   <Resumo
                     linhas={[
                       ["Veículo", `${tipo} · ${modelo}`],
-                      ["Frequência", frequencia],
-                      ...diasEscolhidos.map((d) => [d, `${horaCurta(cfg(d).horario)} · ${cfg(d).servicos.join(", ")}`] as [string, string]),
+                      ["Frequência", personalizado ? rotuloIntervalo : frequencia],
+                      ...diasEscolhidos.map((d) => [personalizado ? "Horário" : d, `${horaCurta(cfg(d).horario)} · ${cfg(d).servicos.join(", ")}`] as [string, string]),
                       ["Início", inicio && formatarData(inicio)],
                     ]}
                   />
