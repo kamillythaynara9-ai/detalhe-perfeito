@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "91924601-7c14-4798-ace6-77bc6e4169f2",
-  "project_id": "c7aa77ea-b953-4129-82e1-3ae7df59f07c",
-  "url": "/__l5e/assets-v1/91924601-7c14-4798-ace6-77bc6e4169f2/logo-detalhe-perfeito.png",
-  "r2_key": "a/v1/c7aa77ea-b953-4129-82e1-3ae7df59f07c/91924601-7c14-4798-ace6-77bc6e4169f2/logo-detalhe-perfeito.png",
-  "original_filename": "logo-detalhe-perfeito.png",
-  "size": 56588,
   "content_type": "image/png",
-  "created_at": "2026-10-19T12:46:14Z"
+  "created_at": "2026-10-19T12:46:14Z",
+  "original_filename": "logo-detalhe-perfeito.png",
+  "project_id": "88777edf-8eeb-424e-91c3-c0f11ac92be0",
+  "r2_key": "a/v1/88777edf-8eeb-424e-91c3-c0f11ac92be0/91924601-7c14-4798-ace6-77bc6e4169f2/logo-detalhe-perfeito.png",
+  "size": 56588,
+  "url": "/__l5e/assets-v1/91924601-7c14-4798-ace6-77bc6e4169f2/logo-detalhe-perfeito.png",
+  "version": 1
 }
