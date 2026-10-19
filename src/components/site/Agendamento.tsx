@@ -11,7 +11,8 @@
  * PLANO MENSAL (5 passos) — é uma agenda fixa, não um dia só:
  *   1. Serviço     — "Plano mensal" (exclusivo: desmarca os avulsos)
  *   2. Veículo     — tipo + modelo
- *   3. Dias        — frequência (toda semana / a cada 15 dias) + dias fixos;
+ *   3. Dias        — frequência (toda semana / a cada 15 dias) + dias fixos
+ *                    (a cada 15 dias aceita UM dia só);
  *                    ou "Personalizado": a pessoa digita o intervalo (ex.: a
  *                    cada 3 dias) e não escolhe dia da semana
  *   4. Cada dia    — horário e um ou mais serviços daquele dia (ex.: terça
@@ -110,13 +111,27 @@ export function Agendamento() {
       return sem.includes(n) ? sem.filter((x) => x !== n) : [...sem, n];
     });
 
+  // "A cada 15 dias" = um único dia da semana: escolher outro troca o anterior.
+  const umDiaSo = frequencia === "A cada 15 dias";
   const alternarDia = (d: string) =>
     setDias((atual) => {
-      const novo = { ...atual };
-      if (d in novo) delete novo[d];
-      else novo[d] = DIA_VAZIO;
-      return novo;
+      if (d in atual) {
+        const novo = { ...atual };
+        delete novo[d];
+        return novo;
+      }
+      return umDiaSo ? { [d]: atual[d] ?? DIA_VAZIO } : { ...atual, [d]: DIA_VAZIO };
     });
+  const escolherFrequencia = (f: string) => {
+    setFrequencia(f);
+    // Ao mudar para 15 dias com vários dias marcados, fica só o primeiro.
+    if (f === "A cada 15 dias") {
+      setDias((atual) => {
+        const primeiro = DIAS_SEMANA.find((d) => d in atual);
+        return primeiro ? { [primeiro]: atual[primeiro] ?? DIA_VAZIO } : {};
+      });
+    }
+  };
 
   const ajustarDia = (d: string, parte: Partial<ConfigDia>) => setDias((atual) => ({ ...atual, [d]: { ...(atual[d] ?? DIA_VAZIO), ...parte } }));
   // Cada dia pode ter mais de um serviço (ex.: lavagem + higienização).
@@ -210,7 +225,7 @@ export function Agendamento() {
                 <>
                   <h3 className="mb-5 font-display text-lg uppercase">Com que frequência?</h3>
                   <div className="mb-8 flex flex-wrap gap-3">
-                    {FREQUENCIAS_PLANO.map((f) => <button key={f} onClick={() => setFrequencia(f)} className={chip(frequencia === f)}>{f}</button>)}
+                    {FREQUENCIAS_PLANO.map((f) => <button key={f} onClick={() => escolherFrequencia(f)} className={chip(frequencia === f)}>{f}</button>)}
                   </div>
                   {personalizado ? (
                     <>
@@ -224,11 +239,11 @@ export function Agendamento() {
                     </>
                   ) : (
                     <>
-                      <h3 className="mb-5 font-display text-lg uppercase">Em quais dias?</h3>
+                      <h3 className="mb-5 font-display text-lg uppercase">{umDiaSo ? "Em qual dia?" : "Em quais dias?"}</h3>
                       <div className="flex flex-wrap gap-3">
                         {DIAS_SEMANA.map((d) => <button key={d} onClick={() => alternarDia(d)} className={chip(d in dias)}>{d}</button>)}
                       </div>
-                      <p className="mt-4 text-xs text-muted-foreground">Pode escolher mais de um. Não atendemos aos domingos.</p>
+                      <p className="mt-4 text-xs text-muted-foreground">{umDiaSo ? "Um dia da semana, a cada 15 dias." : "Pode escolher mais de um."} Não atendemos aos domingos.</p>
                     </>
                   )}
                 </>
