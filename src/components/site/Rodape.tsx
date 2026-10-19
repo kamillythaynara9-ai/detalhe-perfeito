@@ -7,7 +7,7 @@
 import { Instagram, MapPin, MessageCircle, Phone } from "lucide-react";
 import { MARCA } from "@/config/marca";
 import { linkWhatsapp } from "@/lib/whatsapp";
-import logo from "@/assets/logo-detalhe-perfeito.jpg.asset.json";
+import logo from "@/assets/logo-detalhe-perfeito.jpg";
 import { Revelar } from "./Revelar";
 
 export function Rodape() {
@@ -27,7 +27,7 @@ export function Rodape() {
         </Revelar>
 
         <div className="mt-24 flex flex-col items-center gap-8 text-center sm:flex-row sm:justify-between sm:text-left">
-          <img src={logo.url} alt="Detalhe Perfeito" className="w-40" loading="lazy" />
+          <img src={logo} alt="Detalhe Perfeito" className="w-40" loading="lazy" />
           <ul className="space-y-3 text-sm text-muted-foreground">
             <li className="flex items-center justify-center gap-2 sm:justify-start"><MapPin className="h-4 w-4 text-neon" />{MARCA.cidade}</li>
             <li><a href={linkWhatsapp("Olá!")} target="_blank" rel="noopener" className="flex items-center justify-center gap-2 hover:text-neon sm:justify-start"><Phone className="h-4 w-4 text-neon" />{MARCA.telefoneExibicao}</a></li>

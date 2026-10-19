@@ -1,29 +1,20 @@
-# Detalhe Perfeito Web Craft
+# Detalhe Perfeito · Estúdio Automotivo
 
-detalhe perfeito
-São Paulo, SP
-(15) 98801-3276
-@detalhe.perfeito
+Site da Detalhe Perfeito (São Paulo, SP · (15) 98801-3276 · @detalhe.perfeito).
 
-tudo isso é para ensar a IA claude a cosntruir sites da maneira certa, então preciso que tenha onstruções, explicações e etc dentro do codigo como vc monta site, quero que ele se torne tão expecialista quanto vc, entends como ser autentico porem com padrão da marca de criagem
+Começou no Lovable e agora é mantido só aqui, sem ligação com ele. Serve também
+de referência para ensinar a construir sites autênticos para cada marca, no
+padrão DERS: leia `DESIGN.md` (por que o site é assim) e `METODO.md` (o passo a passo).
 
-This project was built with [Lovable](https://lovable.dev).
+## Publicado em
+https://ders-forms-s43d.vercel.app/p/detalhe-perfeito/
 
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/88777edf-8eeb-424e-91c3-c0f11ac92be0).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
+## Rodar e publicar
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+bun install
+bun run dev          # abre em http://127.0.0.1:5173
+bun run test         # regras do agendamento/WhatsApp
+bun run build:ders   # gera dist/client para o endereço /p/detalhe-perfeito/
 ```
+Para publicar, copie o conteúdo de `dist/client` para `p/detalhe-perfeito/` no
+repositório kamillythaynara9-ai/ders-forms (a Vercel publica sozinha).

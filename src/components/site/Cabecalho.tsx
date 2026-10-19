@@ -8,7 +8,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import logo from "@/assets/logo-detalhe-perfeito.png.asset.json";
+import logo from "@/assets/logo-detalhe-perfeito-recortada.png";
 
 const LINKS = [
   { href: "#servicos", rotulo: "Serviços" },
@@ -34,7 +34,7 @@ export function Cabecalho() {
         <a href="#topo" className="flex min-w-0 items-center gap-2" aria-label="Detalhe Perfeito — início">
           {/* Logo sem fundo: um pouco maior e mais para o canto esquerdo */}
           <span className="h-14 w-36 shrink-0 md:h-16 md:w-44">
-            <img src={logo.url} alt="" className="h-full w-full object-contain object-left" />
+            <img src={logo} alt="" className="h-full w-full object-contain object-left" />
           </span>
         </a>
 

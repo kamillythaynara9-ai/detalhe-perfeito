@@ -14,7 +14,7 @@
  */
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import logo from "@/assets/logo-detalhe-perfeito.png.asset.json";
+import logo from "@/assets/logo-detalhe-perfeito-recortada.png";
 
 const CHAVE = "dp-intro-vista";
 
@@ -45,7 +45,7 @@ export function Intro() {
           <svg viewBox="0 0 300 180" className="animar-hexagono absolute w-[min(78vw,420px)]">
             <path d="M60 8 L240 8 L292 90 L240 172 L60 172 L8 90 Z" />
           </svg>
-          <img src={logo.url} alt="" className="animar-logo-surgindo relative w-[min(62vw,330px)]" />
+          <img src={logo} alt="" className="animar-logo-surgindo relative w-[min(52vw,260px)]" />
           <span className="animar-luz-atravessando absolute h-[140vh] w-[40vw]" />
         </motion.div>
       )}

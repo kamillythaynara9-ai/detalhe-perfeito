@@ -10,7 +10,7 @@
  */
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import video from "@/assets/hero-video.mp4.asset.json";
+import video from "@/assets/hero-video.mp4";
 import capa from "@/assets/carro-limpo.jpg";
 import { MARCA } from "@/config/marca";
 import { linkWhatsapp } from "@/lib/whatsapp";
@@ -33,7 +33,7 @@ export function Topo() {
     <section id="topo" ref={ref} onPointerMove={moverLuz} className="relative flex min-h-[100svh] items-center overflow-hidden pb-16 pt-24">
       <motion.div style={{ y: yVideo }} className="absolute inset-0 -z-10">
         <video
-          src={video.url}
+          src={video}
           poster={capa}
           autoPlay muted loop playsInline
           className="h-full w-full object-cover"
