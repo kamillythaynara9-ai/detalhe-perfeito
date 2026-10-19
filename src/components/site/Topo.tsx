@@ -1,8 +1,7 @@
 /**
  * TOPO (hero) — primeira impressão.
  * EFEITO: vídeo real do carro com reflexos rodando em loop no fundo
- * (com foto de capa enquanto carrega), gotas de água escorrendo
- * (gota-escorrendo) e título prata metálico.
+ * (com foto de capa enquanto carrega) e título prata metálico.
  * INTERAÇÃO ASSINATURA "reflexo de polimento": um ponto de luz segue o
  * dedo/mouse por cima do vídeo, como a lanterna que o detalhista usa para
  * procurar riscos na pintura. Só faz sentido num estúdio de estética
@@ -13,11 +12,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import video from "@/assets/hero-video.mp4.asset.json";
 import capa from "@/assets/carro-limpo.jpg";
-
-// Posições fixas (não aleatórias) para o SSR e o navegador renderizarem igual.
-const GOTAS = [8, 19, 31, 46, 58, 67, 79, 91].map((left, i) => ({
-  left, duracao: 4 + (i % 3) * 1.5, atraso: i * 0.7,
-}));
 
 export function Topo() {
   const ref = useRef<HTMLElement>(null);
@@ -34,7 +28,7 @@ export function Topo() {
   };
 
   return (
-    <section id="topo" ref={ref} onPointerMove={moverLuz} className="relative flex min-h-[100svh] items-end overflow-hidden pb-24 pt-28">
+    <section id="topo" ref={ref} onPointerMove={moverLuz} className="relative flex min-h-[100svh] items-center overflow-hidden pb-16 pt-24">
       <motion.div style={{ y: yVideo }} className="absolute inset-0 -z-10">
         <video
           src={video.url}
@@ -54,25 +48,8 @@ export function Topo() {
         className="pointer-events-none absolute inset-0 -z-10 mix-blend-screen [background:radial-gradient(180px_circle_at_var(--x,70%)_var(--y,40%),oklch(0.82_0.22_142/0.22),transparent_70%)]"
       />
 
-      {GOTAS.map((g, i) => (
-        <span
-          key={i}
-          aria-hidden
-          className="animar-gota absolute top-0 h-10 w-px bg-gradient-to-b from-transparent to-prata"
-          style={{ left: `${g.left}%`, animationDuration: `${g.duracao}s`, animationDelay: `${g.atraso}s` }}
-        />
-      ))}
 
       <div className="mx-auto w-full max-w-6xl px-5">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.6 }}
-          className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-neon"
-        >
-          {[0, 1, 2, 3].map((i) => (
-            <span key={i} className="animar-estrela" style={{ animationDelay: `${i * 0.3}s` }}>★</span>
-          ))}
-          <span className="ml-2">Estúdio automotivo · São Paulo</span>
-        </motion.p>
         <motion.h1
           initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.7, duration: 0.8 }}
           className="texto-prata text-4xl font-black uppercase leading-[1.05] sm:text-6xl lg:text-7xl"

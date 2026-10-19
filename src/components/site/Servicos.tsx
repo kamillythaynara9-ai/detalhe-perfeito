@@ -13,7 +13,7 @@ import { SERVICOS } from "@/config/marca";
 import { Revelar, TituloSecao } from "./Revelar";
 
 export function Servicos() {
-  const [aberto, setAberto] = useState<string | null>(SERVICOS[0].id);
+  const [aberto, setAberto] = useState<string | null>(SERVICOS[0]?.id ?? null);
 
   return (
     <section id="servicos" className="relative py-24">

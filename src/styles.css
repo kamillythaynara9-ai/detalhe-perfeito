@@ -66,7 +66,7 @@
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 1.25rem;
 
   --background: oklch(0.13 0.008 250);      /* preto da logo, levemente azulado */
   --foreground: oklch(0.95 0.005 250);      /* prata claro para texto */
@@ -136,7 +136,8 @@
 @utility bg-vidro { background: var(--vidro); backdrop-filter: blur(16px) saturate(140%); }
 @utility shadow-neon { box-shadow: var(--sombra-neon); }
 @utility shadow-profunda { box-shadow: var(--sombra-profunda); }
-@utility corte-hexagono { clip-path: var(--corte-hexagono); }
+/* Suavizado a pedido da cliente: formato pílula arredondada no lugar do hexágono. */
+@utility corte-hexagono { border-radius: 9999px; }
 
 /* Texto prata metálico com reflexo (o "brilho" do carro recém-polido) */
 @utility texto-prata {
