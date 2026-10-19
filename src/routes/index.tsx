@@ -42,10 +42,11 @@ function Index() {
       <Cabecalho />
       <main>
         <Topo />
+        {/* Agendar logo após o topo, a pedido da cliente: ação primeiro. */}
+        <Agendamento />
         <Servicos />
         <AntesDepois />
         <Planos />
-        <Agendamento />
         <Depoimentos />
         <Perguntas />
       </main>
