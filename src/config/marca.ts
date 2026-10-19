@@ -68,3 +68,12 @@ export const SERVICOS: Servico[] = [
 export const HORARIOS = ["08:00", "09:30", "11:00", "13:30", "15:00", "16:30"] as const;
 
 export const TIPOS_VEICULO = ["Hatch", "Sedã", "SUV", "Picape", "Moto"] as const;
+
+// Dias de atendimento (domingo fechado) — usados no plano mensal.
+export const DIAS_SEMANA = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"] as const;
+
+// Frequências do plano mensal.
+export const FREQUENCIAS_PLANO = ["Toda semana", "A cada 15 dias"] as const;
+
+// id do serviço que abre o questionário do plano mensal.
+export const ID_PLANO_MENSAL = "plano-mensal";

@@ -19,14 +19,13 @@
 Cantos assimétricos (`rounded-[2.5rem_0.75rem_...]`) lembram a curva de um para-lama: orgânico, mas com "ponta" como o hexágono.
 
 ## 3. Intro (`Intro.tsx`)
-2,4 s: logo sai do desfoque → faixa de brilho passa por ela → a tela sobe como uma porta de garagem. Toque pula. "Reduzir movimento" desliga.
+2,5 s (versão escolhida pela cliente): a moldura em hexágono se desenha em traço prata → a logo surge dentro dela → uma faixa de luz cruza a tela na diagonal → a tela sobe como uma porta de garagem. Toque pula, aparece uma vez por visita, "Reduzir movimento" desliga. Sem texto de "toque para entrar".
 
 ## 4. Movimento contínuo (algo sempre se mexe, devagar)
 - `fundo-respirando` — manchas de luz do fundo pulsam (14 s).
 - `FundoVivo.tsx` — a luz principal muda de lugar conforme a rolagem (substitui linhas divisórias).
 - `gota-escorrendo` — gotas descendo no topo.
 - `brilho-varrendo` — reflexo passando em títulos e botões.
-- `letreiro-deslizando` — faixa com os nomes dos serviços.
 - `pulso-whatsapp` — anel no botão flutuante.
 
 ## 5. Interação assinatura
@@ -37,7 +36,7 @@ Cantos assimétricos (`rounded-[2.5rem_0.75rem_...]`) lembram a curva de um para
 2. **Serviços** — lista tipográfica grande (não cartões). Toque abre foto + descrição.
 3. **Antes e depois** — prova. Arrastar a linha. Rótulos dentro da imagem.
 4. **Planos** — "uma vez ou todo mês?" — um painel que troca, não dois cartões.
-5. **Agendar** — 4 passos (serviço → veículo → data/hora → nome) → WhatsApp preenchido.
+5. **Agendar** — avulso em 4 passos (serviço → veículo → data/hora → nome); plano mensal em 5 (veículo → frequência e dias fixos → horário e serviço de cada dia → início e nome) → WhatsApp preenchido.
 6. **Depoimentos** — carrossel arrastável (textos de exemplo).
 7. **Perguntas frequentes** — acordeão (respostas de exemplo).
 8. **Chamada final + contato**.
@@ -56,3 +55,9 @@ Menu: Serviços · Planos · **Agendar (destacado)** · Contato. Botão de Whats
 
 ## 9. Conteúdo a confirmar com a cliente
 Depoimentos, respostas do FAQ, "não atendemos domingo" e as promessas do plano mensal foram escritos como exemplo.
+
+## 10. Preferências da cliente (aprendidas nos ajustes)
+- Intro com a moldura da logo se desenhando, não logo saindo do desfoque com "toque para entrar".
+- Sem faixa de texto passando (letreiro).
+- Frase do topo simples e concreta; nada de frase de efeito com cara de IA.
+- Plano mensal é uma agenda fixa, com questionário próprio, funcional e sem firula.

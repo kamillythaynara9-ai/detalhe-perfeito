@@ -26,7 +26,7 @@ export const Route = createFileRoute("/")({
       { title: "Detalhe Perfeito · Estúdio Automotivo em São Paulo" },
       { name: "description", content: "Lavagem detalhada, higienização, polimento e plano mensal. Agende pelo WhatsApp em poucos toques." },
       { property: "og:title", content: "Detalhe Perfeito · Estúdio Automotivo" },
-      { property: "og:description", content: "Seu carro com brilho de vitrine. Agende pelo WhatsApp." },
+      { property: "og:description", content: "Seu carro com cara de zero de novo. Agende pelo WhatsApp." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

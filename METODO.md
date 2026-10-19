@@ -48,7 +48,7 @@ Impacto → o que fazemos → prova → escolha → ação → confiança → ú
 Veja `src/routes/index.tsx`.
 
 ## Passo 6 — Fazer o site "vivo" sem pesar
-- **Movimento contínuo**: 3 a 6 animações CSS lentas e infinitas (fundo, brilho, letreiro). CSS é mais leve que JavaScript.
+- **Movimento contínuo**: 3 a 6 animações CSS lentas e infinitas (fundo, brilho, gotas). CSS é mais leve que JavaScript.
 - **Reação à rolagem**: Framer Motion `useScroll`/`whileInView`, ou variáveis CSS atualizadas em `requestAnimationFrame` (`FundoVivo.tsx`). **Nunca** `setState` a cada pixel de rolagem.
 - **Reação ao toque/mouse**: Pointer Events (um código só para mouse e dedo) — ver `AntesDepois.tsx` e a lanterna em `Topo.tsx`.
 - **Sem linhas divisórias**: a passagem entre seções é feita por degradê e luz.

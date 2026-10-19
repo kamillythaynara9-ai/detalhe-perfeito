@@ -56,14 +56,14 @@ export function Topo() {
           initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.7, duration: 0.8 }}
           className="texto-prata text-4xl font-black uppercase leading-[1.05] sm:text-6xl lg:text-7xl"
         >
-          Seu carro com<br />brilho de <span className="texto-neon">vitrine</span>
+          Seu carro com cara de <span className="texto-neon">zero</span> de novo
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3 }}
           className="mt-5 max-w-md text-base text-muted-foreground sm:text-lg"
         >
-          Lavagem detalhada, higienização e polimento feitos à mão, sem pressa e sem atalho.
-          Cada detalhe, perfeito.
+          Lavagem, higienização, estofado e polimento para carros e motos em São Paulo.
+          Escolha o dia e o horário e agende pelo WhatsApp.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 3.15 }}

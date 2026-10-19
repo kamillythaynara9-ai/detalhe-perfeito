@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { HORARIOS } from "@/config/marca";
-import { linkWhatsapp, mensagemAgendamento } from "./whatsapp";
+import { linkWhatsapp, mensagemAgendamento, mensagemPlanoMensal } from "./whatsapp";
 
 describe("agendamento via WhatsApp", () => {
   it("envia para o número (15) 98801-3276", () => {
@@ -25,5 +25,26 @@ describe("agendamento via WhatsApp", () => {
     expect(msg).toContain("*Dia:* 21/10/2026");
     expect(msg).toContain("*Horário:* 09:30");
     expect(msg).toContain("*Nome:* Ana");
+  });
+
+  it("plano mensal traz veículo, frequência, cada dia com horário e serviço, início e nome", () => {
+    const msg = mensagemPlanoMensal({
+      tipoVeiculo: "Sedã",
+      modelo: "Corolla",
+      frequencia: "Toda semana",
+      dias: [
+        { dia: "Terça", horario: "08:00", servico: "Lavagem convencional" },
+        { dia: "Sexta", horario: "15:00", servico: "Higienização interna" },
+      ],
+      inicio: "2026-11-03",
+      nome: "Ana",
+    });
+    expect(msg).toContain("*plano mensal*");
+    expect(msg).toContain("*Veículo:* Sedã · Corolla");
+    expect(msg).toContain("*Frequência:* Toda semana");
+    expect(msg).toContain("• Terça, 08:00 · Lavagem convencional");
+    expect(msg).toContain("• Sexta, 15:00 · Higienização interna");
+    expect(msg).toContain("*Começar em:* 03/11/2026");
+    expect(msg).not.toContain("Observação");
   });
 });

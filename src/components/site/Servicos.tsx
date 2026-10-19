@@ -1,7 +1,7 @@
 /**
  * SERVIÇOS — os 6 serviços como LISTA TIPOGRÁFICA GRANDE, não grade de cartões.
- * EFEITO: cada nome é enorme, numerado (01, 02...). Antes da lista, um
- * letreiro infinito (letreiro-deslizando) mantém algo sempre em movimento.
+ * EFEITO: cada nome é enorme, numerado (01, 02...). A faixa de texto
+ * passando que havia antes da lista foi removida a pedido da cliente.
  * INTERAÇÃO: no computador, passar o mouse num serviço faz a foto real
  * dele flutuar seguindo o cursor. No celular (sem hover), tocar abre o
  * serviço como um acordeão com foto e descrição — o polegar decide.
@@ -17,14 +17,6 @@ export function Servicos() {
 
   return (
     <section id="servicos" className="relative py-24">
-      <div aria-hidden className="mb-16 overflow-hidden whitespace-nowrap opacity-40">
-        <div className="animar-letreiro inline-flex gap-10 text-lg text-prata">
-          {[...SERVICOS, ...SERVICOS].map((s, i) => (
-            <span key={i} className="flex items-center gap-10">{s.nome}<span className="text-neon">✦</span></span>
-          ))}
-        </div>
-      </div>
-
       <div className="mx-auto max-w-6xl px-5">
         <TituloSecao rotulo="Serviços" titulo={<>O cuidado certo<br />para cada detalhe</>} />
 

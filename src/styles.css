@@ -203,12 +203,32 @@
 }
 @utility animar-pulso { animation: pulso-whatsapp 2s ease-out infinite; }
 
-/* letreiro-deslizando: faixa infinita com nomes dos serviços. */
-@keyframes letreiro-deslizando {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+/* ---------- INTRO (ver Intro.tsx) ---------- */
+/* hexagono-desenhando: a moldura da logo é traçada como se alguém a desenhasse. */
+@keyframes hexagono-desenhando { to { stroke-dashoffset: 0; } }
+@utility animar-hexagono {
+  fill: none;
+  stroke: var(--prata);
+  stroke-width: 2;
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+  filter: drop-shadow(0 0 8px oklch(1 0 0 / 0.35));
+  animation: hexagono-desenhando 1.3s 0.1s cubic-bezier(0.6, 0, 0.2, 1) forwards;
 }
-@utility animar-letreiro { animation: letreiro-deslizando 28s linear infinite; }
+/* logo-surgindo: a logo aparece de leve no centro da moldura. */
+@keyframes logo-surgindo { to { opacity: 1; transform: none; } }
+@utility animar-logo-surgindo {
+  opacity: 0;
+  transform: scale(0.92);
+  animation: logo-surgindo 0.8s 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+/* luz-atravessando: reflexo diagonal que cruza a tela inteira uma vez. */
+@keyframes luz-atravessando { to { transform: rotate(18deg) translateX(120vw); } }
+@utility animar-luz-atravessando {
+  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.14), transparent);
+  transform: rotate(18deg) translateX(-120vw);
+  animation: luz-atravessando 1.1s 1.5s ease-in-out forwards;
+}
 
 /* ACESSIBILIDADE: quem ativa "reduzir movimento" no sistema recebe o site
    parado. Nunca esqueça este bloco. */

@@ -38,3 +38,35 @@ export function mensagemAgendamento(p: PedidoAgendamento): string {
     `*Nome:* ${p.nome}`,
   ].join("\n");
 }
+
+/** Um dia fixo da semana dentro do plano mensal. */
+export type DiaPlano = {
+  dia: string; // "Segunda", "Terça"...
+  horario: string;
+  servico: string;
+};
+
+export type PedidoPlanoMensal = {
+  tipoVeiculo: string;
+  modelo: string;
+  frequencia: string; // "Toda semana" | "A cada 15 dias"
+  dias: DiaPlano[];
+  inicio: string; // AAAA-MM-DD
+  nome: string;
+  observacao?: string | undefined;
+};
+
+/** Plano mensal: uma linha por dia escolhido, para a dona montar a agenda fixa. */
+export function mensagemPlanoMensal(p: PedidoPlanoMensal): string {
+  return [
+    `Olá, ${MARCA.nome}! Quero montar um *plano mensal*:`,
+    ``,
+    `*Veículo:* ${p.tipoVeiculo} · ${p.modelo}`,
+    `*Frequência:* ${p.frequencia}`,
+    `*Dias:*`,
+    ...p.dias.map((d) => `• ${d.dia}, ${d.horario} · ${d.servico}`),
+    `*Começar em:* ${formatarData(p.inicio)}`,
+    ...(p.observacao ? [`*Observação:* ${p.observacao}`] : []),
+    `*Nome:* ${p.nome}`,
+  ].join("\n");
+}

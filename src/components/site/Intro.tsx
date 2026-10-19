@@ -1,23 +1,33 @@
 /**
- * INTRO — abertura de ~2,4 s com a cara da marca.
- * EFEITO: a logo surge do escuro, as 4 estrelas verdes acendem uma a uma
- * e uma faixa de luz (brilho-varrendo) passa sobre ela, como o reflexo de
- * um carro recém-polido. Depois a tela "abre" para cima revelando o site.
+ * INTRO — abertura de ~2,5 s com a cara da marca (versão escolhida pela cliente).
+ * EFEITO, em 3 tempos:
+ *   1. a moldura em hexágono da logo se DESENHA em traço prata (0,1 s → 1,4 s);
+ *   2. a logo surge no meio da moldura (1 s → 1,8 s);
+ *   3. uma faixa de luz atravessa a tela na diagonal, como o reflexo de uma
+ *      lâmpada passando num carro recém-polido (1,5 s → 2,6 s).
+ * Depois a tela "abre" para cima como uma porta de garagem.
  * INTERAÇÃO: toque/clique em qualquer lugar pula a intro.
- * REGRA: intro nunca passa de 3 s — o cliente quer o conteúdo, não um filme.
- * Com "reduzir movimento" ativo, a intro nem aparece.
+ * REGRAS: nunca passa de 3 s; aparece só uma vez por visita (sessionStorage);
+ * com "reduzir movimento" ativo, nem aparece.
+ * As animações (hexagono-desenhando, logo-surgindo, luz-atravessando) estão
+ * em src/styles.css.
  */
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import logo from "@/assets/logo-detalhe-perfeito.png.asset.json";
+
+const CHAVE = "dp-intro-vista";
 
 export function Intro() {
   const reduzir = useReducedMotion();
   const [visivel, setVisivel] = useState(true);
 
   useEffect(() => {
-    if (reduzir) return setVisivel(false);
-    const t = setTimeout(() => setVisivel(false), 2400);
+    let jaViu = false;
+    try { jaViu = sessionStorage.getItem(CHAVE) === "1"; } catch { /* modo privado */ }
+    if (reduzir || jaViu) return setVisivel(false);
+    try { sessionStorage.setItem(CHAVE, "1"); } catch { /* modo privado */ }
+    const t = setTimeout(() => setVisivel(false), 2500);
     return () => clearTimeout(t);
   }, [reduzir]);
 
@@ -26,27 +36,17 @@ export function Intro() {
       {visivel && (
         <motion.div
           key="intro"
+          aria-hidden
           onClick={() => setVisivel(false)}
-          className="fixed inset-0 z-[100] flex cursor-pointer flex-col items-center justify-center bg-background"
+          className="fixed inset-0 z-[100] grid cursor-pointer place-items-center overflow-hidden bg-background"
           exit={{ clipPath: "inset(0 0 100% 0)" }}
-          transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+          transition={{ duration: 0.9, ease: [0.7, 0, 0.2, 1] }}
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85, filter: "blur(12px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-            className="animar-brilho w-64 sm:w-80"
-          >
-            <img src={logo.url} alt="Detalhe Perfeito — Estúdio Automotivo" className="w-full" />
-          </motion.div>
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.6 }}
-            transition={{ delay: 1.2 }}
-            className="mt-6 text-xs uppercase tracking-[0.3em] text-muted-foreground"
-          >
-            toque para entrar
-          </motion.span>
+          <svg viewBox="0 0 300 180" className="animar-hexagono absolute w-[min(78vw,420px)]">
+            <path d="M60 8 L240 8 L292 90 L240 172 L60 172 L8 90 Z" />
+          </svg>
+          <img src={logo.url} alt="" className="animar-logo-surgindo relative w-[min(62vw,330px)]" />
+          <span className="animar-luz-atravessando absolute h-[140vh] w-[40vw]" />
         </motion.div>
       )}
     </AnimatePresence>
