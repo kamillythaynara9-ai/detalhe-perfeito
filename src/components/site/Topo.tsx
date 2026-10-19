@@ -8,16 +8,20 @@
  * automotiva — é o detalhe que a pessoa lembra.
  * ROLAGEM: o vídeo desce mais devagar que a página (parallax) e escurece.
  */
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import video from "@/assets/hero-video.mp4";
 import capa from "@/assets/carro-limpo.jpg";
 import { MARCA } from "@/config/marca";
 import { linkWhatsapp } from "@/lib/whatsapp";
+import { atrasoAposIntro } from "@/lib/intro";
 
 export function Topo() {
   const ref = useRef<HTMLElement>(null);
   const luz = useRef<HTMLDivElement>(null);
+  // Os textos entram logo que a intro sobe (ou na hora, com "reduzir movimento").
+  const reduzir = useReducedMotion();
+  const atraso = (folga: number) => (reduzir ? 0 : atrasoAposIntro(folga));
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const yVideo = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const escurecer = useTransform(scrollYProgress, [0, 1], [0.35, 0.85]);
@@ -53,20 +57,20 @@ export function Topo() {
 
       <div className="mx-auto w-full max-w-6xl px-5">
         <motion.h1
-          initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.7, duration: 0.8 }}
+          initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: atraso(0.2), duration: 0.8 }}
           className="texto-prata text-4xl font-black uppercase leading-[1.05] sm:text-6xl lg:text-7xl"
         >
           Seu carro com cara de <span className="texto-neon">zero</span> de novo
         </motion.h1>
         <motion.p
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3 }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: atraso(0.5) }}
           className="mt-5 max-w-md text-base text-muted-foreground sm:text-lg"
         >
           Lavagem, higienização, estofado e polimento para carros e motos em São Paulo.
           Escolha o dia e o horário e agende pelo WhatsApp.
         </motion.p>
         <motion.div
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 3.15 }}
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: atraso(0.65) }}
           className="mt-8 flex flex-wrap gap-4"
         >
           <a href="#agendar" className="corte-hexagono bg-gradiente-neon animar-brilho shadow-neon px-8 py-4 font-display text-sm font-bold uppercase tracking-widest text-primary-foreground">

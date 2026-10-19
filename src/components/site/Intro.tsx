@@ -7,27 +7,27 @@
  *      lâmpada passando num carro recém-polido (1,5 s → 2,6 s).
  * Depois a tela "abre" para cima como uma porta de garagem.
  * INTERAÇÃO: toque/clique em qualquer lugar pula a intro.
- * REGRAS: nunca passa de 3 s; aparece só uma vez por visita (sessionStorage);
+ * REGRAS: nunca passa de 3 s; roda em TODA abertura/atualização da página;
  * com "reduzir movimento" ativo, nem aparece.
+ * TEMPO: o site vem pré-renderizado, então as animações CSS da intro começam
+ * no primeiro desenho da tela, antes do JavaScript carregar. Por isso o fim
+ * da intro é contado desde a abertura da página (performance.now), e não
+ * desde que o React acordou — senão ela cortava no meio ao atualizar.
  * As animações (hexagono-desenhando, logo-surgindo, luz-atravessando) estão
  * em src/styles.css.
  */
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import logo from "@/assets/logo-detalhe-perfeito-recortada.png";
-
-const CHAVE = "dp-intro-vista";
+import { atrasoAposIntro } from "@/lib/intro";
 
 export function Intro() {
   const reduzir = useReducedMotion();
   const [visivel, setVisivel] = useState(true);
 
   useEffect(() => {
-    let jaViu = false;
-    try { jaViu = sessionStorage.getItem(CHAVE) === "1"; } catch { /* modo privado */ }
-    if (reduzir || jaViu) return setVisivel(false);
-    try { sessionStorage.setItem(CHAVE, "1"); } catch { /* modo privado */ }
-    const t = setTimeout(() => setVisivel(false), 2500);
+    if (reduzir) return setVisivel(false);
+    const t = setTimeout(() => setVisivel(false), atrasoAposIntro() * 1000);
     return () => clearTimeout(t);
   }, [reduzir]);
 
