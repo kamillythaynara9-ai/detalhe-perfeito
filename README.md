@@ -15,3 +15,15 @@ bun run build   # gera o site pronto em dist/client
 ```
 Hospedado na Vercel: a cada push na `main` ela roda `bun run build` e publica
 `dist/client` (configurado em `vercel.json`, sem precisar mexer em nada no painel).
+
+## Dois sites no mesmo repositório
+- **Site atual** (React): código em `src/`, sem nenhuma mudança.
+- **Site novo** (HTML/CSS/JS puros): pasta `site-novo/`. Detalhes em `site-novo/README.md`.
+
+### Trocar o site principal
+Abra `sites.json` e mude uma palavra:
+- `"principal": "antigo"` → site atual em `/` e o novo em `/novo/`
+- `"principal": "novo"` → site novo em `/` e o atual em `/antigo/`
+
+Faça push na `main`; a Vercel roda `bun run build:sites` (`scripts/montar-sites.mjs`) e publica os dois.
+Para voltar, é só trocar a palavra de novo. O novo continua em `/novo/` nos dois casos.
